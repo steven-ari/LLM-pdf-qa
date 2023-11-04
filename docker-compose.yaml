@@ -4,6 +4,9 @@ services:
     image: crccheck/hello-world
     ports:
       - 8000
+  
+  langchain:
+    
 
   nginx:
     container_name: nginx
