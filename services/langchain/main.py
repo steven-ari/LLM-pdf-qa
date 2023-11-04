@@ -9,24 +9,15 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import OpenAI
 from langchain.callbacks import get_openai_callback
 
-# Load environment variables
-load_dotenv()
+from langchain.document_loaders import PyPDFLoader
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.vectorstores import Chroma
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.chains import RetrievalQA
+from langchain.llms import OpenAI
 
-def process_text(text):
-    # Split the text into chunks using langchain
-    text_splitter = CharacterTextSplitter(
-        separator="\n",
-        chunk_size=1000,
-        chunk_overlap=200,
-        length_function=len
-    )
-    chunks = text_splitter.split_text(text)
-    
-    # Convert the chunks of text into embeddings to form a knowledge base
-    embeddings = OpenAIEmbeddings()
-    knowledgeBase = FAISS.from_texts(chunks, embeddings)
-    
-    return knowledgeBase
+# Load environment variables
+load_dotenv('.env')
 
 def main():
     st.title("Chat with your PDF 💬")
@@ -39,26 +30,41 @@ def main():
         text = ""
         for page in pdf_reader.pages:
             text += page.extract_text()
+
+        # Split the text into chunks using langchain
+        text_splitter = CharacterTextSplitter(
+            separator="\n",
+            chunk_size=1000,
+            chunk_overlap=200,
+            length_function=len
+        )
+        chunks = text_splitter.split_text(text)
         
-        # Create the knowledge base object
-        knowledgeBase = process_text(text)
+        vectordb = Chroma.from_texts(
+            chunks,
+            embedding=OpenAIEmbeddings(),
+            persist_directory='./data'
+        )
+        vectordb.persist()
+
+        qa_chain = RetrievalQA.from_chain_type(
+            llm=OpenAI(),
+            retriever=vectordb.as_retriever(search_kwargs={'k': 6}),
+            return_source_documents=True
+        )
         
-        query = st.text_input('Ask a question to the PDF')
+        query = st.text_input('Ask your question just like in ChatGPT')
         cancel_button = st.button('Cancel')
         
         if cancel_button:
             st.stop()
         
         if query:
-            docs = knowledgeBase.similarity_search(query)
-            llm = OpenAI()
-            chain = load_qa_chain(llm, chain_type='stuff')
-            
             with get_openai_callback() as cost:
-                response = chain.run(input_documents=docs, question=query)
+                result = qa_chain({'query': query})
                 print(cost)
                 
-            st.write(response)
+            st.write(result['result'])
             
             
 if __name__ == "__main__":
