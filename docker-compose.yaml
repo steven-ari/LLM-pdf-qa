@@ -1,14 +1,6 @@
 version: "3.7"
 
 services:
-  db:
-    image: postgres:13-alpine
-    ports:
-      - 5432:5432
-    volumes:
-      - ../volumes/database/postgres-data:/var/lib/postgresql/data # to keep the database data persistent
-    env_file:
-      - ./.env.dev
 
   web:
     build: ./services/web
