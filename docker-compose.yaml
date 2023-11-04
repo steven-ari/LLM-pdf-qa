@@ -6,7 +6,11 @@ services:
       - 8000
   
   langchain:
-    
+    build: ./services/langchain
+    volumes:
+      - ./services/langchain/:/usr/src/
+    ports:
+      - 8501:8501
 
   nginx:
     container_name: nginx
