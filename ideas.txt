@@ -1,0 +1,4 @@
+- deploy w docker container
+- secret as input argument of deployment
+- dont use faiss
+- use poetry
