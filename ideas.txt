@@ -1,7 +1,9 @@
 - deploy w docker container
 - secret as input argument of deployment
 - choose between chroma vs faiss
+
+
+- also this for html https://www.paepper.com/blog/posts/build-q-and-a-bot-of-your-website-using-langchain/ 
 - use poetry
 - base on this: https://betterprogramming.pub/building-a-multi-document-reader-and-chatbot-with-langchain-and-chatgpt-d1864d47e339 
-- also this for html https://www.paepper.com/blog/posts/build-q-and-a-bot-of-your-website-using-langchain/ 
 - provide example pdf, links, etc
