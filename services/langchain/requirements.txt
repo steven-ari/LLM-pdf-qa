@@ -1,3 +1,4 @@
+beautifulsoup4==4.12.2
 chromadb==0.4.15
 langchain==0.0.329
 faiss_cpu==1.7.4
