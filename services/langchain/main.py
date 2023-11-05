@@ -61,7 +61,7 @@ def is_valid_url(text: str) -> bool:
 def main():
     st.title("Chat with your PDF 💬")
 
-    pdf = st.file_uploader('Upload your PDF Document, previous uploads will be saved', type='pdf')
+    pdf = st.file_uploader('Upload your PDF Document, previous uploads will be saved and emptied daily', type='pdf')
 
     if pdf is not None:
         pdf_reader = PdfReader(pdf)
@@ -85,7 +85,7 @@ def main():
         st.write("")
 
     st.header('OR.. chat with your link 🔗 ', divider='rainbow')
-    url = st.text_input("Enter a URL and chat with it, previous links will be saved")
+    url = st.text_input("Enter a URL and chat with it, previous links will be saved and emptied daily")
 
     if is_valid_url(url):
         text_url = extract_text_from(url)
