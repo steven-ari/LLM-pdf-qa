@@ -1,7 +1,0 @@
-- deploy w docker container
-- secret as input argument of deployment
-- choose between chroma vs faiss
-- change to steven.testing-the-langchain.de
-
-- use poetry
-- provide example pdf, links, etc
