@@ -81,8 +81,7 @@ def main():
 
             st.write(result['result'])
 
-    for _ in range(7):
-        st.write("")
+    st.write("\n"*7)
 
     st.header('OR.. chat with your link 🔗 ', divider='rainbow')
     url = st.text_input("Enter a URL and chat with it, previous links will be saved and emptied daily")
