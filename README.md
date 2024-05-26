@@ -1,3 +1,5 @@
+## LLM Based PDF Summarizer and Q/A App Using OpenAI, LangChain, and Streamlit
+
 Result: https://steven.testing-the-langchain.de/
 
 ![image](https://github.com/steven-ari/LLM-pdf-qa/assets/78702199/fb9f032e-098d-40bb-b92d-c7f3bd4ab95f)
